@@ -1,0 +1,100 @@
+{
+  "workflow": {
+    "nodes": [
+      {
+        "id": "input_node",
+        "type": "Input",
+        "label": "User Query",
+        "nodeCategory": "input"
+      },
+      {
+        "id": "skills_assessment_agent",
+        "type": "Agent",
+        "label": "Skills Assessment Agent",
+        "nodeCategory": "agent",
+        "agent_id": "69a24546f89af5d059caa2c0",
+        "provider_id": "perplexity",
+        "model": "sonar-pro",
+        "temperature": 0.4,
+        "top_p": 0.95
+      },
+      {
+        "id": "adaptive_learning_agent",
+        "type": "Agent",
+        "label": "Adaptive Learning Agent",
+        "nodeCategory": "agent",
+        "agent_id": "69a24547f89af5d059caa2c2",
+        "provider_id": "perplexity",
+        "model": "sonar-pro",
+        "temperature": 0.5,
+        "top_p": 0.95
+      },
+      {
+        "id": "problem_solving_agent",
+        "type": "Agent",
+        "label": "Problem-Solving Agent",
+        "nodeCategory": "agent",
+        "agent_id": "69a24547f89af5d059caa2c4",
+        "provider_id": "perplexity",
+        "model": "sonar-pro",
+        "temperature": 0.3,
+        "top_p": 0.9
+      }
+    ],
+    "edges": [
+      {
+        "source": "input_node",
+        "target": "skills_assessment_agent"
+      },
+      {
+        "source": "input_node",
+        "target": "adaptive_learning_agent"
+      },
+      {
+        "source": "input_node",
+        "target": "problem_solving_agent"
+      }
+    ]
+  },
+  "agents": [
+    {
+      "agent_id": "69a24546f89af5d059caa2c0",
+      "name": "Skills Assessment Agent",
+      "description": "Conducts Socratic diagnostic conversations to evaluate the learner's existing NVIDIA AI Factory deployment knowledge across all competency areas. Maps strengths, weaknesses, and assigns initial proficiency scores per skill domain.",
+      "agent_type": "json",
+      "provider_id": "perplexity",
+      "model": "sonar-pro",
+      "temperature": 0.4,
+      "top_p": 0.95,
+      "image_output_config": null,
+      "voice_config": null,
+      "file_output": false
+    },
+    {
+      "agent_id": "69a24547f89af5d059caa2c2",
+      "name": "Adaptive Learning Agent",
+      "description": "Identifies the learner's highest-priority skill gap, retrieves authoritative content from nvidia.com, and engages through Socratic dialogue to build understanding. Updates skill scores after each interaction.",
+      "agent_type": "json",
+      "provider_id": "perplexity",
+      "model": "sonar-pro",
+      "temperature": 0.5,
+      "top_p": 0.95,
+      "image_output_config": null,
+      "voice_config": null,
+      "file_output": false
+    },
+    {
+      "agent_id": "69a24547f89af5d059caa2c4",
+      "name": "Problem-Solving Agent",
+      "description": "Helps learners resolve real NVIDIA AI Factory deployment issues in real-time using Socratic troubleshooting -- asking diagnostic questions, guiding reasoning, then walking through resolution steps. Sources answers exclusively from nvidia.com.",
+      "agent_type": "json",
+      "provider_id": "perplexity",
+      "model": "sonar-pro",
+      "temperature": 0.3,
+      "top_p": 0.9,
+      "image_output_config": null,
+      "voice_config": null,
+      "file_output": false
+    }
+  ]
+}

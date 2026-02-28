@@ -1,0 +1,39 @@
+{
+  "agent_name": "Adaptive Learning Agent",
+  "agent_id": "69a24547f89af5d059caa2c2",
+  "description": "Identifies the learner's highest-priority skill gap, retrieves authoritative content from nvidia.com, and engages through Socratic dialogue to build understanding. Updates skill scores after each interaction.",
+  "agent_type": "json",
+  "accessor": "result",
+  "auto_generated": true,
+  "response_schema": {
+    "response": "string",
+    "current_focus": "string",
+    "skill_update": {
+      "domain": "string",
+      "previous_score": "number",
+      "new_score": "number",
+      "reason": "string"
+    },
+    "knowledge_context": [
+      {
+        "title": "string",
+        "excerpt": "string",
+        "url": "string"
+      }
+    ],
+    "sources": ["string"]
+  },
+  "example_response": {
+    "response": "The agent's Socratic dialogue response with conceptual framing and questions",
+    "current_focus": "infrastructure",
+    "skill_update": null,
+    "knowledge_context": [
+      {
+        "title": "NVIDIA AI Factory Architecture",
+        "excerpt": "Sample excerpt about deployment architecture",
+        "url": "https://nvidia.com/example"
+      }
+    ],
+    "sources": ["https://nvidia.com/example"]
+  }
+}

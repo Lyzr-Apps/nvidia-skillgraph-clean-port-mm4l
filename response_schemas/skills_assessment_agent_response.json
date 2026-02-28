@@ -1,0 +1,35 @@
+{
+  "agent_name": "Skills Assessment Agent",
+  "agent_id": "69a24546f89af5d059caa2c0",
+  "description": "Conducts Socratic diagnostic conversations to evaluate the learner's existing NVIDIA AI Factory deployment knowledge across all competency areas. Maps strengths, weaknesses, and assigns initial proficiency scores per skill domain.",
+  "agent_type": "json",
+  "accessor": "result",
+  "auto_generated": true,
+  "response_schema": {
+    "response": "string",
+    "assessment_complete": "boolean",
+    "skills_data": {
+      "overall_readiness": "number",
+      "domains": {
+        "infrastructure": "number",
+        "networking": "number",
+        "storage": "number",
+        "orchestration": "number",
+        "gpu_management": "number",
+        "security": "number",
+        "mlops": "number",
+        "monitoring": "number"
+      },
+      "strengths": ["string"],
+      "gaps": ["string"],
+      "recommended_focus": ["string"]
+    },
+    "sources": ["string"]
+  },
+  "example_response": {
+    "response": "The agent's conversational response text including Socratic questions or assessment results",
+    "assessment_complete": false,
+    "skills_data": null,
+    "sources": ["https://nvidia.com/example"]
+  }
+}

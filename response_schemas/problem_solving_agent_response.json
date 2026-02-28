@@ -1,0 +1,34 @@
+{
+  "agent_name": "Problem-Solving Agent",
+  "agent_id": "69a24547f89af5d059caa2c4",
+  "description": "Helps learners resolve real NVIDIA AI Factory deployment issues in real-time using Socratic troubleshooting -- asking diagnostic questions, guiding reasoning, then walking through resolution steps. Sources answers exclusively from nvidia.com.",
+  "agent_type": "json",
+  "accessor": "result",
+  "auto_generated": true,
+  "response_schema": {
+    "response": "string",
+    "diagnostic_phase": "string",
+    "resolution_steps": [
+      {
+        "step_number": "number",
+        "instruction": "string",
+        "explanation": "string",
+        "source_url": "string"
+      }
+    ],
+    "skill_update": {
+      "domain": "string",
+      "previous_score": "number",
+      "new_score": "number",
+      "reason": "string"
+    },
+    "sources": ["string"]
+  },
+  "example_response": {
+    "response": "The agent's diagnostic/troubleshooting response with Socratic questions or resolution steps",
+    "diagnostic_phase": "gathering_info",
+    "resolution_steps": [],
+    "skill_update": null,
+    "sources": ["https://nvidia.com/example"]
+  }
+}

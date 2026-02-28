@@ -1,0 +1,18 @@
+{
+  "agent_ids": {
+    "skills_assessment_agent": "69a24546f89af5d059caa2c0",
+    "adaptive_learning_agent": "69a24547f89af5d059caa2c2",
+    "problem_solving_agent": "69a24547f89af5d059caa2c4"
+  },
+  "agent_names": {
+    "69a24546f89af5d059caa2c0": "Skills Assessment Agent",
+    "69a24547f89af5d059caa2c2": "Adaptive Learning Agent",
+    "69a24547f89af5d059caa2c4": "Problem-Solving Agent"
+  },
+  "rag_ids": {},
+  "schedule_ids": {},
+  "workflow_pattern": "independent_agents",
+  "total_agents": 3,
+  "provider": "perplexity",
+  "model": "sonar-pro"
+}
