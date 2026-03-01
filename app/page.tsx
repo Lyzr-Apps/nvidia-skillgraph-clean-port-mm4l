@@ -1,11 +1,10 @@
 'use client'
 
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { useState, useCallback } from 'react'
 import { callAIAgent } from '@/lib/aiAgent'
 import type { AIAgentResponse } from '@/lib/aiAgent'
 import parseLLMJson from '@/lib/jsonParser'
 import { Switch } from '@/components/ui/switch'
-import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
 
 import Sidebar from './sections/Sidebar'
@@ -166,12 +165,12 @@ class ErrorBoundary extends React.Component<
     if (this.state.hasError) {
       return (
         <div className="min-h-screen flex items-center justify-center bg-background text-foreground">
-          <div className="text-center p-8 max-w-md">
+          <div className="text-center p-8 max-w-md rounded-2xl border border-border/40 bg-card">
             <h2 className="text-xl font-semibold mb-2">Something went wrong</h2>
             <p className="text-muted-foreground mb-4 text-sm">{this.state.error}</p>
             <button
               onClick={() => this.setState({ hasError: false, error: '' })}
-              className="px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm"
+              className="px-5 py-2.5 gradient-blue text-white rounded-xl text-sm font-medium hover:opacity-90 transition-opacity"
             >
               Try again
             </button>
@@ -185,22 +184,17 @@ class ErrorBoundary extends React.Component<
 
 // --- Main Page ---
 export default function Page() {
-  // Navigation
   const [currentView, setCurrentView] = useState<ViewType>('dashboard')
   const [mobileOpen, setMobileOpen] = useState(false)
 
-  // Skills Data
   const [skillsData, setSkillsData] = useState<SkillsData | null>(null)
 
-  // Chat Messages
   const [assessmentMessages, setAssessmentMessages] = useState<ChatMessage[]>([])
   const [learningMessages, setLearningMessages] = useState<ChatMessage[]>([])
   const [problemMessages, setProblemMessages] = useState<ChatMessage[]>([])
 
-  // Activity
   const [activityLog, setActivityLog] = useState<ActivityEntry[]>([])
 
-  // Loading & Error
   const [assessmentLoading, setAssessmentLoading] = useState(false)
   const [learningLoading, setLearningLoading] = useState(false)
   const [problemLoading, setProblemLoading] = useState(false)
@@ -208,24 +202,18 @@ export default function Page() {
   const [learningError, setLearningError] = useState<string | null>(null)
   const [problemError, setProblemError] = useState<string | null>(null)
 
-  // Assessment state
   const [assessmentComplete, setAssessmentComplete] = useState(false)
   const [assessmentStarted, setAssessmentStarted] = useState(false)
 
-  // Learning state
   const [currentFocus, setCurrentFocus] = useState('infrastructure')
   const [diagnosticPhase, setDiagnosticPhase] = useState('gathering_info')
 
-  // Session IDs
   const [sessionIds, setSessionIds] = useState<Record<string, string>>({})
 
-  // Sample Data toggle
   const [showSample, setShowSample] = useState(false)
 
-  // Active agent tracking
   const [activeAgentId, setActiveAgentId] = useState<string | null>(null)
 
-  // Get or create session ID
   const getSessionId = useCallback(
     (agentKey: string) => {
       if (sessionIds[agentKey]) return sessionIds[agentKey]
@@ -236,7 +224,6 @@ export default function Page() {
     [sessionIds]
   )
 
-  // Add activity
   const addActivity = useCallback(
     (type: ActivityEntry['type'], summary: string, skillImpact?: ActivityEntry['skillImpact']) => {
       const entry: ActivityEntry = {
@@ -251,7 +238,6 @@ export default function Page() {
     []
   )
 
-  // Apply skill update
   const applySkillUpdate = useCallback(
     (update: { domain: string; previous_score: number; new_score: number; reason: string }) => {
       setSkillsData((prev) => {
@@ -451,7 +437,6 @@ export default function Page() {
     [getSessionId, diagnosticPhase, applySkillUpdate, addActivity]
   )
 
-  // Learning session controls
   const handleEndLearningSession = useCallback(() => {
     setLearningMessages([])
     setSessionIds((prev) => {
@@ -471,7 +456,6 @@ export default function Page() {
     })
   }, [])
 
-  // Problem resolved
   const handleMarkResolved = useCallback(() => {
     setDiagnosticPhase('resolved')
     addActivity('problem-solving', 'Issue marked as resolved')
@@ -484,7 +468,7 @@ export default function Page() {
     setDiagnosticPhase('gathering_info')
   }, [addActivity])
 
-  // Derive display data based on sample toggle
+  // Derive display data
   const displaySkills = showSample ? SAMPLE_SKILLS : skillsData
   const displayActivity = showSample ? SAMPLE_ACTIVITY : activityLog
   const displayAssessmentMsgs = showSample ? SAMPLE_ASSESSMENT_MESSAGES : assessmentMessages
@@ -492,11 +476,10 @@ export default function Page() {
   const displayAssessmentStarted = showSample ? true : assessmentStarted
   const displayAssessmentComplete = showSample ? false : assessmentComplete
 
-  // Agent info
   const agents = [
-    { id: SKILLS_ASSESSMENT_AGENT, name: 'Skills Assessment', purpose: 'Evaluates deployment knowledge' },
-    { id: ADAPTIVE_LEARNING_AGENT, name: 'Adaptive Learning', purpose: 'Socratic gap-filling dialogue' },
-    { id: PROBLEM_SOLVING_AGENT, name: 'Problem Solver', purpose: 'Guided troubleshooting' },
+    { id: SKILLS_ASSESSMENT_AGENT, name: 'Assessment', color: 'gradient-purple' },
+    { id: ADAPTIVE_LEARNING_AGENT, name: 'Learning', color: 'gradient-teal' },
+    { id: PROBLEM_SOLVING_AGENT, name: 'Problem Solver', color: 'gradient-orange' },
   ]
 
   return (
@@ -508,23 +491,35 @@ export default function Page() {
           domains={displaySkills?.domains ? displaySkills.domains as any : null}
           mobileOpen={mobileOpen}
           onMobileToggle={() => setMobileOpen((p) => !p)}
+          overallScore={displaySkills?.overall_readiness ?? 0}
         />
 
         <main className="flex-1 min-w-0 flex flex-col">
           {/* Top Bar */}
-          <div className="flex items-center justify-between px-4 py-2 border-b border-border bg-card">
-            <div className="flex items-center gap-2 ml-8 md:ml-0">
-              {activeAgentId && (
-                <Badge variant="outline" className="text-[10px] font-mono animate-pulse border-accent text-accent">
-                  Agent Active
-                </Badge>
-              )}
+          <div className="flex items-center justify-between px-5 py-2.5 border-b border-border/40 bg-card/80 backdrop-blur-sm">
+            <div className="flex items-center gap-3 ml-10 md:ml-0">
               {agents.map((a) => (
-                <div key={a.id} className={cn('w-1.5 h-1.5 rounded-full', activeAgentId === a.id ? 'bg-accent' : 'bg-muted')} title={a.name} />
+                <div key={a.id} className="flex items-center gap-1.5">
+                  <div className={cn(
+                    'w-1.5 h-1.5 rounded-full transition-all',
+                    activeAgentId === a.id ? `${a.color} animate-pulse shadow-sm` : 'bg-border'
+                  )} />
+                  <span className={cn(
+                    'text-[10px] font-mono transition-colors hidden sm:inline',
+                    activeAgentId === a.id ? 'text-foreground' : 'text-muted-foreground/50'
+                  )}>
+                    {a.name}
+                  </span>
+                </div>
               ))}
+              {activeAgentId && (
+                <span className="text-[9px] px-2 py-0.5 rounded-full bg-accent/10 text-accent border border-accent/20 font-mono animate-pulse">
+                  Processing
+                </span>
+              )}
             </div>
-            <div className="flex items-center gap-2">
-              <span className="text-[10px] text-muted-foreground font-mono">Sample Data</span>
+            <div className="flex items-center gap-2.5">
+              <span className="text-[10px] text-muted-foreground/60">Preview</span>
               <Switch
                 checked={showSample}
                 onCheckedChange={setShowSample}
@@ -583,19 +578,6 @@ export default function Page() {
             {currentView === 'skills-graph' && (
               <SkillsGraph skillsData={displaySkills} />
             )}
-          </div>
-
-          {/* Agent Status Footer */}
-          <div className="border-t border-border bg-card px-4 py-1.5">
-            <div className="flex items-center gap-4 text-[10px] text-muted-foreground overflow-x-auto">
-              {agents.map((a) => (
-                <div key={a.id} className="flex items-center gap-1.5 whitespace-nowrap">
-                  <div className={cn('w-1.5 h-1.5 rounded-full flex-shrink-0', activeAgentId === a.id ? 'bg-accent animate-pulse' : 'bg-muted')} />
-                  <span className={cn('font-mono', activeAgentId === a.id ? 'text-foreground' : '')}>{a.name}</span>
-                  <span className="hidden sm:inline">- {a.purpose}</span>
-                </div>
-              ))}
-            </div>
           </div>
         </main>
       </div>

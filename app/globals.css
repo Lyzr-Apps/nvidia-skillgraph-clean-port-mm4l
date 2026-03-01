@@ -81,3 +81,80 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(220 16% 26%);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(220 16% 32%);
+}
+
+/* Gradient utilities */
+.gradient-green {
+  background: linear-gradient(135deg, hsl(92 28% 60%) 0%, hsl(172 43% 50%) 100%);
+}
+.gradient-blue {
+  background: linear-gradient(135deg, hsl(213 32% 52%) 0%, hsl(193 43% 65%) 100%);
+}
+.gradient-purple {
+  background: linear-gradient(135deg, hsl(311 20% 60%) 0%, hsl(260 40% 55%) 100%);
+}
+.gradient-orange {
+  background: linear-gradient(135deg, hsl(14 51% 60%) 0%, hsl(35 60% 55%) 100%);
+}
+.gradient-teal {
+  background: linear-gradient(135deg, hsl(193 43% 65%) 0%, hsl(213 32% 60%) 100%);
+}
+.gradient-hero {
+  background: linear-gradient(135deg, hsl(213 32% 52% / 0.15) 0%, hsl(193 43% 65% / 0.1) 50%, hsl(311 20% 60% / 0.08) 100%);
+}
+
+/* Glow effects */
+.glow-blue {
+  box-shadow: 0 0 20px hsl(213 32% 52% / 0.15), 0 0 40px hsl(213 32% 52% / 0.05);
+}
+.glow-green {
+  box-shadow: 0 0 20px hsl(92 28% 60% / 0.15), 0 0 40px hsl(92 28% 60% / 0.05);
+}
+.glow-purple {
+  box-shadow: 0 0 20px hsl(311 20% 60% / 0.15), 0 0 40px hsl(311 20% 60% / 0.05);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-12px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes pulse-ring {
+  0% { transform: scale(0.9); opacity: 0.5; }
+  50% { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.5; }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.animate-fadeIn {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+.animate-slideIn {
+  animation: slideIn 0.3s ease-out forwards;
+}
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent 25%, hsl(220 16% 28%) 50%, transparent 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
